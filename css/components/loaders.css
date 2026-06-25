@@ -1,0 +1,113 @@
+/* ============================================================
+   loaders.css - Loading States
+   No CSS spinners. Admin-defined GIF/Webm only (40x40px).
+   ============================================================ */
+
+/* ── Loading overlay wrapper ── */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(250, 249, 247, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-loader);
+  backdrop-filter: blur(4px);
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loading-gif {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.loading-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* ── Inline Loader (for buttons, sections) ── */
+.loader-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-inline img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* ── Skeleton shimmer (placeholder while loading) ── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-secondary) 25%,
+    var(--stroke-light) 50%,
+    var(--bg-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-text {
+  height: 12px;
+  margin-bottom: 0.5rem;
+  width: 80%;
+}
+
+.skeleton-image {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.skeleton-card {
+  height: 100px;
+  width: 100%;
+}
+
+/* ── Order Processing Animation ── */
+.processing-animation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: var(--accent-amber);
+  font-size: 0.85rem;
+}
+
+.processing-animation img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.processing-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}

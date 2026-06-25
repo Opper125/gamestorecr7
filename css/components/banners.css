@@ -1,0 +1,85 @@
+/* ============================================================
+   banners.css - Banner Slider Components
+   Sliding transitions, navigation dots, aspect ratio constraints
+   ============================================================ */
+
+.banner-slider {
+  position: relative;
+  width: 62vw;
+  max-width: 62%;
+  height: 15vh;
+  margin: 0.75rem auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--bg-secondary);
+}
+
+.banner-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+.banner-slide {
+  min-width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.banner-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.banner-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--stroke-light);
+  transition: all var(--transition-fast);
+}
+
+.banner-dot.active {
+  background: var(--accent-blue);
+  width: 18px;
+  border-radius: 99px;
+}
+
+/* ── Category Banner ── */
+.category-banner-slider {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.75rem;
+  background: var(--bg-secondary);
+}
+
+.category-banner-slide {
+  min-width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.category-banner-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Announcement Banner ── */
+.announcement-banner {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}

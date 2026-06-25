@@ -1,0 +1,580 @@
+/* ============================================================
+   cards.css - Card Components
+   Studio theme cards with soft shadows and clean typography
+   ============================================================ */
+
+/* ── Base Card ── */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  transition: box-shadow var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.04);
+}
+
+/* ── Category Card ── */
+.category-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+.category-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+}
+
+.category-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  line-height: 1.2;
+}
+
+.category-flag {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.category-discount {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent-red);
+  background: rgba(239, 68, 68, 0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 99px;
+}
+
+.category-stats {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.category-stats span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* ── Product Card (Type 1 - Simple) ── */
+.product-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.product-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.product-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.product-amount-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+.product-price-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.product-price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.product-price.original {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+.product-stock {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.product-sold-out {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--accent-red);
+  padding: 0.1rem 0.4rem;
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: 99px;
+}
+
+.product-add-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.product-add-btn:hover {
+  opacity: 0.8;
+}
+
+/* ── Product Card (Type 2 - Game Account) ── */
+.game-account-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.game-account-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.game-account-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.game-account-body {
+  padding: 0.75rem;
+}
+
+.game-account-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.game-account-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.game-account-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+/* ── Product Card (Type 3 - Merchandise) ── */
+.merch-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.merch-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.merch-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.merch-body {
+  padding: 0.75rem;
+}
+
+.merch-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.merch-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.merch-subtype {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Order Card ── */
+.order-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.order-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.order-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.order-status {
+  flex-shrink: 0;
+}
+
+.order-rejection {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  line-height: 1.4;
+  display: none;
+}
+
+.order-rejection.visible {
+  display: block;
+}
+
+/* ── Menu Card ── */
+.menu-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  min-width: 60px;
+}
+
+.menu-card:hover {
+  opacity: 0.8;
+}
+
+.menu-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.menu-name {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ── Cart Item Card ── */
+.cart-item-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.cart-item-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.cart-item-info {
+  flex: 1;
+}
+
+.cart-item-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cart-item-price {
+  font-size: 0.8rem;
+  color: var(--price-color);
+  font-weight: 600;
+}
+
+.cart-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qty-btn {
+  width: 28px;
+  height: 28px;
+  background: var(--bg-secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background var(--transition-fast);
+}
+
+.qty-btn:hover {
+  background: var(--stroke-light);
+}
+
+.qty-value {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.cart-item-remove {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.cart-item-remove:hover {
+  color: var(--accent-red);
+}
+
+/* ── Notification Card ── */
+.notif-card {
+  padding: 0.85rem;
+  border-bottom: 1px solid var(--stroke-light);
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.notif-card:hover {
+  background: var(--bg-secondary);
+}
+
+.notif-card.unread {
+  background: rgba(59, 130, 246, 0.03);
+}
+
+.notif-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.notif-body {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.notif-time {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.notif-claim-btn {
+  margin-top: 0.5rem;
+  padding: 0.35rem 1rem;
+  background: var(--accent-blue);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.notif-claim-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Review Card ── */
+.review-card {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.review-user {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.review-stars {
+  display: flex;
+  gap: 1px;
+}
+
+.review-star {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-amber);
+}
+
+.review-star.empty {
+  color: var(--stroke-light);
+}
+
+.review-message {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ── Premium Plan Card ── */
+.premium-plan-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  transition: transform var(--transition-fast);
+}
+
+.premium-plan-card:hover {
+  transform: translateY(-2px);
+}
+
+.premium-plan-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.premium-plan-content {
+  position: relative;
+  z-index: 1;
+  padding: 1.25rem;
+  background: rgba(26, 26, 26, 0.85);
+  color: white;
+}
+
+.premium-plan-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.premium-plan-features {
+  list-style: none;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+.premium-plan-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 0.75rem;
+}
+
+.premium-plan-buy-btn {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1.5rem;
+  background: white;
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+/* ── Deposit Card ── */
+.deposit-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deposit-amount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.deposit-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
