@@ -23,6 +23,7 @@ const CONFIG = {
     g2bulkV1: '/api/g2bulk-v1',
     g2bulkV2: '/api/g2bulk-v2',
     youtube: '/api/youtube',
+    auth: '/api/auth',
     adminAuth: '/api/admin-auth',
     balance: '/api/balance',
     promo: '/api/promo',
