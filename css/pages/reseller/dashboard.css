@@ -1,0 +1,120 @@
+/* ============================================================
+   pages/reseller/dashboard.css - Reseller Dashboard Styles
+   ============================================================ */
+
+#reseller-page-dashboard {
+  padding: 0;
+}
+
+#reseller-page-dashboard .page-title {
+  padding: 0 0 0.75rem;
+}
+
+/* ── Reseller Stats Grid ── */
+#reseller-dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.reseller-stat-card {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.reseller-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.reseller-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* ── Trial Banner ── */
+.trial-banner {
+  background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+  color: white;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trial-banner-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.trial-banner-days {
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.trial-banner-cta {
+  padding: 0.35rem 0.85rem;
+  background: white;
+  color: var(--accent-blue);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* ── Limits Notice ── */
+.limits-notice {
+  padding: 0.75rem;
+  background: rgba(245, 158, 11, 0.06);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--accent-amber);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.limits-notice svg {
+  flex-shrink: 0;
+}
+
+/* ── Reseller Chart ── */
+#reseller-dashboard-chart {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  min-height: 180px;
+}
+
+/* ── Reseller Storefront Link ── */
+.storefront-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--accent-blue);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast);
+}
+
+.storefront-link:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.storefront-link svg {
+  flex-shrink: 0;
+}

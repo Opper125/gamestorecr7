@@ -1,0 +1,148 @@
+/* ============================================================
+   pages/admin/orders.css - Admin Orders Page Styles
+   ============================================================ */
+
+#admin-page-orders {
+  padding: 0;
+}
+
+#admin-page-orders .page-title {
+  padding: 0 0 1rem;
+}
+
+/* ── Admin Order Filters ── */
+#admin-page-orders .orders-tabs {
+  margin-bottom: 1rem;
+}
+
+/* ── Order List ── */
+#admin-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.admin-order-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+}
+
+.admin-order-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.admin-order-info {
+  flex: 1;
+}
+
+.admin-order-user {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.15rem;
+}
+
+.admin-order-product {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.admin-order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.admin-order-total {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--price-color);
+  flex-shrink: 0;
+}
+
+.admin-order-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--stroke-light);
+}
+
+.admin-order-btn {
+  flex: 1;
+  padding: 0.45rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  transition: opacity var(--transition-fast);
+}
+
+.admin-order-btn.approve {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.admin-order-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+.admin-order-btn:hover {
+  opacity: 0.8;
+}
+
+/* ── Rejection Input ── */
+.rejection-input {
+  margin-top: 0.5rem;
+  display: none;
+}
+
+.rejection-input.visible {
+  display: block;
+}
+
+.rejection-input textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  resize: vertical;
+  margin-bottom: 0.35rem;
+}
+
+.rejection-input .rejection-confirm-btn {
+  padding: 0.35rem 0.85rem;
+  background: var(--accent-red);
+  color: white;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* ── Order Detail (snapshot) ── */
+.admin-order-snapshot {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.admin-order-snapshot .snapshot-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}

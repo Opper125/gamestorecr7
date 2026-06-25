@@ -1,0 +1,210 @@
+/* ============================================================
+   pages/admin/products.css - Admin Products/Menu Page Styles
+   ============================================================ */
+
+#admin-page-products {
+  padding: 0;
+}
+
+#admin-page-products .page-title {
+  padding: 0 0 0.75rem;
+}
+
+.admin-tab-content {
+  min-height: 200px;
+}
+
+/* ── Create Button ── */
+.create-btn {
+  width: 100%;
+  padding: 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px dashed var(--stroke-medium);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all var(--transition-fast);
+  margin-bottom: 0.75rem;
+}
+
+.create-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.03);
+}
+
+/* ── List Items ── */
+.admin-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 0.5rem;
+}
+
+.admin-list-item-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.admin-list-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-list-item-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.admin-list-item-meta {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.admin-list-item-actions {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.admin-list-edit-btn,
+.admin-list-delete-btn {
+  padding: 0.3rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.admin-list-edit-btn {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.admin-list-delete-btn {
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--accent-red);
+}
+
+/* ── Product Form ── */
+.product-form {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+}
+
+.product-form .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.product-form h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Product Subtype Selector ── */
+.subtype-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.subtype-btn {
+  padding: 0.4rem 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.subtype-btn.selected {
+  background: var(--accent-blue);
+  color: white;
+}
+
+.subtype-btn:hover:not(.selected) {
+  background: var(--stroke-light);
+}
+
+/* ── Attribute Grid (sizes, colors) ── */
+.attribute-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.attribute-chip {
+  padding: 0.3rem 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--stroke-light);
+  border-radius: 99px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.attribute-chip.selected {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+}
+
+/* ── Social Links Input ── */
+.social-link-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.social-link-row input {
+  flex: 1;
+}
+
+.social-link-row .remove-btn {
+  color: var(--accent-red);
+  font-size: 1.1rem;
+}
+
+/* ── Product Select (for input tables) ── */
+.product-select-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem;
+}
+
+.product-select-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.product-select-item input[type="checkbox"] {
+  accent-color: var(--accent-blue);
+}
+
+/* ── Sold Out Toggle ── */
+.sold-out-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

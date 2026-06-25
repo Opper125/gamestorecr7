@@ -1,0 +1,172 @@
+/* ============================================================
+   pages/admin/reseller.css - Admin Reseller Page Styles
+   ============================================================ */
+
+/* ── KYC Application Card ── */
+.kyc-admin-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.kyc-admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.kyc-admin-user {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.kyc-admin-status {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+}
+
+.kyc-admin-status.pending {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--accent-amber);
+}
+
+.kyc-admin-status.approved {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.kyc-admin-status.rejected {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+.kyc-admin-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem 1rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.kyc-admin-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.kyc-admin-field-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.kyc-admin-field-value {
+  color: var(--text-primary);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* ── KYC Image Previews ── */
+.kyc-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.kyc-image-preview {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--bg-secondary);
+}
+
+.kyc-image-preview:hover {
+  opacity: 0.85;
+}
+
+/* ── KYC Actions ── */
+.kyc-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.kyc-action-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.kyc-action-btn.approve {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.kyc-action-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+/* ── Premium Plan Card (Admin) ── */
+.premium-plan-admin-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-plan-admin-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.premium-plan-admin-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--price-color);
+  margin-bottom: 0.5rem;
+}
+
+.premium-plan-admin-features {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.premium-plan-admin-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Plan Bg Preview ── */
+.plan-bg-preview {
+  width: 100%;
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-top: 0.35rem;
+}
+
+/* ── Stroke Color Preview ── */
+.stroke-color-preview {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--stroke-light);
+  display: inline-block;
+  vertical-align: middle;
+}

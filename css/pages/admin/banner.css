@@ -1,0 +1,87 @@
+/* ============================================================
+   pages/admin/banner.css - Admin Banner Page Styles
+   ============================================================ */
+
+.banner-section {
+  margin-bottom: 1.5rem;
+}
+
+.banner-upload-area {
+  margin-bottom: 1rem;
+}
+
+/* ── Banner Preview ── */
+.banner-preview {
+  width: 100%;
+  aspect-ratio: 2560 / 1200;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  margin-top: 0.5rem;
+}
+
+.banner-preview-sm {
+  width: 120px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* ── Banner List ── */
+.banner-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.banner-admin-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+.banner-admin-info {
+  flex: 1;
+}
+
+.banner-admin-order {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.banner-admin-delete {
+  padding: 0.3rem 0.6rem;
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--accent-red);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+}
+
+/* ── Category Multi-Select ── */
+.category-multi-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem;
+}
+
+.category-select-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.category-select-item input[type="checkbox"] {
+  accent-color: var(--accent-blue);
+}

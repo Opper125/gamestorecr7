@@ -1,0 +1,228 @@
+/* ============================================================
+   pages/admin/users.css - Admin Users Page Styles
+   ============================================================ */
+
+/* ── User Search ── */
+#admin-users-search {
+  margin-bottom: 1rem;
+}
+
+#admin-users-search-input {
+  width: 100%;
+}
+
+/* ── User List ── */
+#admin-users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-admin-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: box-shadow var(--transition-fast);
+}
+
+.user-admin-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-admin-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-secondary);
+}
+
+.user-admin-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-admin-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.user-admin-email {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.user-admin-balance {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.user-admin-stats {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.user-admin-stat {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+/* ── User Detail Panel ── */
+.user-detail-panel {
+  padding: 0;
+}
+
+.user-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+}
+
+.user-detail-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-detail-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.user-detail-email {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.user-detail-section {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.user-detail-section h4 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+/* ── Balance Actions ── */
+.balance-action-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.balance-action-row input {
+  flex: 1;
+}
+
+.balance-action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.balance-action-btn.credit {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.balance-action-btn.debit {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+/* ── User Orders Summary ── */
+.user-orders-summary {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-order-stat {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.user-order-stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.user-order-stat-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* ── Notes Field ── */
+.user-notes-field {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  resize: vertical;
+}
+
+/* ── Ban/Unban Button ── */
+.ban-btn {
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ban-btn.ban {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+.ban-btn.unban {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+/* ── Back Button ── */
+.user-detail-back {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  cursor: pointer;
+}
+
+.user-detail-back:hover {
+  color: var(--text-secondary);
+}

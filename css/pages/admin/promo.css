@@ -1,0 +1,151 @@
+/* ============================================================
+   pages/admin/promo.css - Admin Promo Codes Page Styles
+   ============================================================ */
+
+#admin-promo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.promo-admin-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+}
+
+.promo-admin-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.promo-admin-code {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  letter-spacing: 0.04em;
+}
+
+.promo-admin-type {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 99px;
+}
+
+.promo-admin-type.cash {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.promo-admin-type.discount {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+}
+
+.promo-admin-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.promo-admin-details span {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.promo-admin-delete {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(239, 68, 68, 0.06);
+  color: var(--accent-red);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+}
+
+/* ── Promo Form ── */
+.promo-form {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+}
+
+.promo-form-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.promo-form-row .form-group {
+  flex: 1;
+}
+
+/* ── Scope Selector ── */
+.scope-selector {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.scope-btn {
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.scope-btn.active {
+  background: var(--accent-blue);
+  color: white;
+}
+
+/* ── Category Multi-Select for Scope ── */
+.scope-category-list {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.scope-category-item {
+  padding: 0.3rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+}
+
+/* ── Usage Count ── */
+.usage-count {
+  font-weight: 600;
+}
+
+.usage-count.full {
+  color: var(--accent-red);
+}
+
+.usage-count.available {
+  color: var(--accent-green);
+}
+
+/* ── Expiry Date Display ── */
+.expiry-display {
+  color: var(--text-muted);
+}
+
+.expiry-display.expired {
+  color: var(--accent-red);
+}

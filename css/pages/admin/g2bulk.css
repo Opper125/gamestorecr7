@@ -1,0 +1,199 @@
+/* ============================================================
+   pages/admin/g2bulk.css - Admin G2Bulk Page Styles
+   ============================================================ */
+
+/* ── G2Bulk Categories ── */
+.g2bulk-category-section {
+  margin-bottom: 1rem;
+}
+
+/* ── Game Assignment ── */
+.game-assign-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+}
+
+.game-assign-code {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 60px;
+}
+
+.game-assign-name {
+  flex: 1;
+  color: var(--text-secondary);
+}
+
+.game-assign-category {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 0.15rem 0.4rem;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+/* ── Product Icon Management ── */
+.product-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.product-icon-item {
+  text-align: center;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+.product-icon-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin: 0 auto 0.25rem;
+}
+
+.product-icon-id {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+/* ── Price Settings ── */
+.price-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.price-setting-card {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+}
+
+.price-setting-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.price-setting-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ── G2Bulk Balance Display ── */
+.g2bulk-balance {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.g2bulk-balance-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.g2bulk-balance-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.g2bulk-balance-value.sufficient {
+  color: var(--accent-green);
+}
+
+.g2bulk-balance-value.low {
+  color: var(--accent-amber);
+}
+
+.g2bulk-balance-value.critical {
+  color: var(--accent-red);
+}
+
+/* ── Deposits ── */
+.deposit-admin-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.deposit-admin-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.deposit-admin-user {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.deposit-admin-amount {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.deposit-admin-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.deposit-admin-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ── Buying Pro ── */
+.buying-pro-admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.buying-pro-admin-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+}
+
+.buying-pro-rank-preview {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.buying-pro-rank-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  min-width: 30px;
+}
+
+.buying-pro-rank-upload {
+  flex: 1;
+}
