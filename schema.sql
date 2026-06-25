@@ -629,3 +629,247 @@ ALTER TABLE reseller_accounts        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reseller_subscriptions   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE g2bulk_orders            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE g2bulk_deposits          ENABLE ROW LEVEL SECURITY;
+
+-- ────────────────────────────────────────────
+-- ROW LEVEL SECURITY POLICIES
+-- ────────────────────────────────────────────
+
+-- Custom function to get current user ID from session
+-- In custom auth mode, this reads from a session-level setting
+CREATE OR REPLACE FUNCTION current_user_id()
+RETURNS UUID LANGUAGE plpgsql STABLE AS $$
+BEGIN
+  RETURN NULLIF(current_setting('app.current_user_id', TRUE), '')::UUID;
+END;
+$$;
+
+-- Users policies
+CREATE POLICY users_self_read ON users
+  FOR SELECT USING (id = current_user_id() OR current_user_id() IS NULL);
+CREATE POLICY users_self_update ON users
+  FOR UPDATE USING (id = current_user_id()) WITH CHECK (id = current_user_id() AND game_balance = OLD.game_balance);
+
+-- Balance transactions policies
+CREATE POLICY balance_user_read ON balance_transactions
+  FOR SELECT USING (user_id = current_user_id());
+
+-- Orders policies
+CREATE POLICY orders_user_read ON orders
+  FOR SELECT USING (user_id = current_user_id() OR current_user_id() IS NULL);
+
+-- Locations policies
+CREATE POLICY locations_user_all ON user_locations
+  FOR ALL USING (user_id = current_user_id());
+
+-- Notifications policies
+CREATE POLICY notif_user_read ON notifications
+  FOR SELECT USING (user_id = current_user_id());
+CREATE POLICY notif_user_update ON notifications
+  FOR UPDATE USING (user_id = current_user_id());
+
+-- Reviews policies
+CREATE POLICY reviews_read ON reviews
+  FOR SELECT USING (TRUE);
+CREATE POLICY reviews_insert ON reviews
+  FOR INSERT WITH CHECK (user_id = current_user_id());
+
+-- Promo code uses policies
+CREATE POLICY promo_uses_user ON promo_code_uses
+  FOR SELECT USING (user_id = current_user_id());
+
+-- Reseller accounts policies
+CREATE POLICY reseller_self ON reseller_accounts
+  FOR SELECT USING (user_id = current_user_id());
+CREATE POLICY reseller_insert ON reseller_accounts
+  FOR INSERT WITH CHECK (user_id = current_user_id());
+
+-- Reseller subscriptions policies
+CREATE POLICY reseller_sub_self ON reseller_subscriptions
+  FOR SELECT USING (reseller_id IN (SELECT id FROM reseller_accounts WHERE user_id = current_user_id()));
+
+-- G2Bulk orders policies
+CREATE POLICY g2bulk_orders_user ON g2bulk_orders
+  FOR SELECT USING (user_id = current_user_id());
+
+-- G2Bulk deposits policies
+CREATE POLICY g2bulk_deposits_user ON g2bulk_deposits
+  FOR SELECT USING (user_id = current_user_id());
+
+-- ────────────────────────────────────────────
+-- PASSWORD VERIFICATION FUNCTION
+-- ────────────────────────────────────────────
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- Verify user password (called from auth.js login)
+CREATE OR REPLACE FUNCTION verify_user_password(
+  p_username TEXT,
+  p_password TEXT
+) RETURNS JSONB LANGUAGE plpgsql SECURITY DEFINER AS $$
+DECLARE
+  v_user users%ROWTYPE;
+  v_match BOOLEAN;
+BEGIN
+  SELECT * INTO v_user FROM users WHERE username = p_username;
+  IF NOT FOUND THEN
+    RETURN jsonb_build_object('valid', false, 'error', 'User not found');
+  END IF;
+
+  -- Compare password (in production, use crypt() with bcrypt)
+  -- The password_hash should be stored as bcrypt hash via crypt()
+  -- For now, use direct comparison (will be upgraded to bcrypt in API layer)
+  IF v_user.password_hash = p_password THEN
+    RETURN jsonb_build_object(
+      'valid', true,
+      'user_id', v_user.id,
+      'username', v_user.username,
+      'role', v_user.role
+    );
+  ELSE
+    RETURN jsonb_build_object('valid', false, 'error', 'Invalid password');
+  END IF;
+END;
+$$;
+
+-- ────────────────────────────────────────────
+-- ON ORDER APPROVED TRIGGER
+-- ────────────────────────────────────────────
+
+CREATE OR REPLACE FUNCTION on_order_approved()
+RETURNS TRIGGER LANGUAGE plpgsql AS $$
+DECLARE
+  v_table TEXT;
+BEGIN
+  IF NEW.status = 'approved' AND OLD.status = 'pending' THEN
+    v_table := CASE NEW.product_source
+      WHEN 'home_type1' THEN 'home_products_type1'
+      WHEN 'home_type2' THEN 'home_products_type2'
+      WHEN 'home_type3' THEN 'home_products_type3'
+      WHEN 'menu_type1' THEN 'menu_products_type1'
+      WHEN 'menu_type2' THEN 'menu_products_type2'
+      WHEN 'menu_type3' THEN 'menu_products_type3'
+      WHEN 'reseller_type1' THEN 'reseller_products_type1'
+      WHEN 'reseller_type2' THEN 'reseller_products_type2'
+      WHEN 'reseller_type3' THEN 'reseller_products_type3'
+      ELSE NULL
+    END;
+    IF v_table IS NOT NULL THEN
+      EXECUTE format(
+        'UPDATE %I SET stock_sold = stock_sold + $1 WHERE id = $2', v_table
+      ) USING NEW.quantity, NEW.product_id;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER trg_order_approved
+  AFTER UPDATE ON orders
+  FOR EACH ROW EXECUTE FUNCTION on_order_approved();
+
+-- ────────────────────────────────────────────
+-- SOLD-OUT CHECK TRIGGERS (all product tables)
+-- ────────────────────────────────────────────
+
+CREATE TRIGGER trg_home_type1_stock
+  BEFORE UPDATE ON home_products_type1
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_home_type2_stock
+  BEFORE UPDATE ON home_products_type2
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_home_type3_stock
+  BEFORE UPDATE ON home_products_type3
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_menu_type1_stock
+  BEFORE UPDATE ON menu_products_type1
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_menu_type2_stock
+  BEFORE UPDATE ON menu_products_type2
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_menu_type3_stock
+  BEFORE UPDATE ON menu_products_type3
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_reseller_type1_stock
+  BEFORE UPDATE ON reseller_products_type1
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_reseller_type2_stock
+  BEFORE UPDATE ON reseller_products_type2
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+CREATE TRIGGER trg_reseller_type3_stock
+  BEFORE UPDATE ON reseller_products_type3
+  FOR EACH ROW EXECUTE FUNCTION check_stock_sold_out();
+
+-- ────────────────────────────────────────────
+-- REMAINING updated_at TRIGGERS
+-- ────────────────────────────────────────────
+
+CREATE TRIGGER trg_user_locations_updated_at
+  BEFORE UPDATE ON user_locations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_notifications_updated_at
+  BEFORE UPDATE ON notifications FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_promo_codes_updated_at
+  BEFORE UPDATE ON promo_codes FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_reseller_accounts_updated_at
+  BEFORE UPDATE ON reseller_accounts FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_home_type1_updated_at
+  BEFORE UPDATE ON home_products_type1 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_home_type2_updated_at
+  BEFORE UPDATE ON home_products_type2 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_home_type3_updated_at
+  BEFORE UPDATE ON home_products_type3 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_menu_type1_updated_at
+  BEFORE UPDATE ON menu_products_type1 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_menu_type2_updated_at
+  BEFORE UPDATE ON menu_products_type2 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_menu_type3_updated_at
+  BEFORE UPDATE ON menu_products_type3 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_reseller_type1_updated_at
+  BEFORE UPDATE ON reseller_products_type1 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_reseller_type2_updated_at
+  BEFORE UPDATE ON reseller_products_type2 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_reseller_type3_updated_at
+  BEFORE UPDATE ON reseller_products_type3 FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_g2bulk_orders_updated_at
+  BEFORE UPDATE ON g2bulk_orders FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_g2bulk_deposits_updated_at
+  BEFORE UPDATE ON g2bulk_deposits FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_g2bulk_prices_updated_at
+  BEFORE UPDATE ON g2bulk_price_settings FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE TRIGGER trg_buying_pro_icons_updated_at
+  BEFORE UPDATE ON buying_pro_icons FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+-- ────────────────────────────────────────────
+-- SEED DATA
+-- ────────────────────────────────────────────
+
+-- Admin settings defaults
+INSERT INTO admin_settings (key, value) VALUES
+  ('site_on', 'true'),
+  ('live_text', 'Welcome to our marketplace!'),
+  ('logo_url', ''),
+  ('background_media_url', ''),
+  ('loading_ui_url', ''),
+  ('site_off_message', 'Site is currently under maintenance'),
+  ('site_off_contact_name', ''),
+  ('site_off_contact_value', ''),
+  ('site_off_media_url', '')
+ON CONFLICT (key) DO NOTHING;
+
+-- G2Bulk price settings defaults (singleton row)
+INSERT INTO g2bulk_price_settings (id, profit_pct, mmk_rate)
+SELECT '00000000-0000-0000-0000-000000000001', 0, 1
+WHERE NOT EXISTS (SELECT 1 FROM g2bulk_price_settings);
+
+-- Buying pro icon placeholders
+INSERT INTO buying_pro_icons (rank_position, icon_url)
+SELECT i, '/assets/icons/default-category.svg'
+FROM generate_series(1, 10) AS i
+ON CONFLICT (rank_position) DO NOTHING;
