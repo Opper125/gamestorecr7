@@ -11,7 +11,7 @@ const ResellerProducts = { activeType: 'type1',
   renderTypeTabs() {
     const container = document.getElementById('reseller-products-content');
     if (!container) return;
-    container.innerHTML = `<div class="product-type-tabs"><button class="product-type-tab active" data-type="type1">Simple</button><button class="product-type-tab" data-type="type2">Accounts</button><button class="product-type-tab" data-type="type3">Merch</button></div><div id="reseller-product-list" class="reseller-product-list"></div>`;
+    container.innerHTML = '<div class="product-type-tabs"><button class="product-type-tab active" data-type="type1">Simple</button><button class="product-type-tab" data-type="type2">Accounts</button><button class="product-type-tab" data-type="type3">Merch</button></div><div id="reseller-product-list" class="reseller-product-list"></div>';
     container.querySelectorAll('.product-type-tab').forEach(t => t.addEventListener('click', () => {
       container.querySelectorAll('.product-type-tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active'); this.activeType = t.dataset.type; this.renderProducts();
@@ -29,8 +29,19 @@ const ResellerProducts = { activeType: 'type1',
         order:{column:'created_at',ascending:false}
       })});
       const {data} = await res.json();
-      list.innerHTML = `<button class="create-btn">+ Add ${this.activeType === 'type1' ? 'Simple' : this.activeType === 'type2' ? 'Account' : 'Merch'} Product</button>
-      ${(data||[]).map(p => `<div class="reseller-product-card"><div class="reseller-product-info"><div class="reseller-product-name">${Utils.escapeHtml(p.name)}</div><div class="reseller-product-meta">${p.stock_sold||0} sold</div></div><div class="reseller-product-price">${Utils.formatCurrency(p.price)}</div></div>`).join('')}`;
+      const items = data || [];
+      let html = '<button class="create-btn" id="reseller-add-product">+ Add ' + (this.activeType === 'type1' ? 'Simple' : this.activeType === 'type2' ? 'Account' : 'Merch') + ' Product</button>';
+      if (items.length === 0) {
+        html += '<div style="text-align:center;padding:1rem;color:var(--text-muted);font-size:0.8rem;">No products yet</div>';
+      } else {
+        html += items.map(function(p) {
+          return '<div class="reseller-product-card"><div class="reseller-product-info"><div class="reseller-product-name">' + Utils.escapeHtml(p.name) + '</div><div class="reseller-product-meta">' + (p.stock_sold||0) + ' sold</div></div><div class="reseller-product-price">' + Utils.formatCurrency(p.price) + '</div></div>';
+        }).join('');
+      }
+      list.innerHTML = html;
+      document.getElementById('reseller-add-product')?.addEventListener('click', function() {
+        Utils.showConfirmModal('Add Product', 'Enter password to create', 'Create').then(function(c) { if (c) Utils.showToast('Product form would open', 'success'); });
+      });
     } catch(e) { list.innerHTML = '<div style="color:var(--text-muted);padding:1rem;">Failed to load</div>'; }
   }
 };

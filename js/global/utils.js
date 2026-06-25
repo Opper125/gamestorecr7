@@ -180,6 +180,47 @@ const Utils = {
   },
 
   /**
+   * Show a confirmation modal dialog
+   * @param {string} title - Modal title
+   * @param {string} message - Modal message
+   * @param {string} confirmText - Confirm button text
+   * @returns {Promise<boolean>} - Resolves true if confirmed
+   */
+  showConfirmModal(title, message, confirmText) {
+    return new Promise((resolve) => {
+      const modal = document.getElementById('confirm-pwd-modal');
+      if (modal) {
+        const titleEl = modal.querySelector('.modal-title');
+        const input = modal.querySelector('#confirm-pwd-input');
+        const errorEl = modal.querySelector('#confirm-pwd-error');
+        const cancelBtn = modal.querySelector('#confirm-pwd-cancel');
+        const submitBtn = modal.querySelector('#confirm-pwd-submit');
+        if (titleEl) titleEl.textContent = title;
+        if (input) input.placeholder = message || confirmText || 'Confirm';
+        if (errorEl) errorEl.style.display = 'none';
+        modal.style.display = 'flex';
+        const cleanup = () => { modal.style.display = 'none'; if (input) input.value = ''; };
+        cancelBtn.onclick = () => { cleanup(); resolve(false); };
+        submitBtn.onclick = () => { cleanup(); resolve(true); };
+        modal.querySelector('.modal-close').onclick = () => { cleanup(); resolve(false); };
+      } else {
+        resolve(confirm(message || title || 'Confirm?'));
+      }
+    });
+  },
+
+  /**
+   * Show a success toast notification
+   */
+  showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:' + (type === 'success' ? '#22C55E' : type === 'error' ? '#EF4444' : '#1A1A1A') + ';color:white;padding:0.75rem 1.25rem;border-radius:8px;font-size:0.85rem;font-weight:500;z-index:1000;box-shadow:0 4px 16px rgba(0,0,0,0.15);max-width:90vw;text-align:center;';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.style.opacity = '0'; toast.style.transition = 'opacity 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 3000);
+  },
+
+  /**
    * Parse JSON safely
    */
   safeJsonParse(str, defaultVal = null) {

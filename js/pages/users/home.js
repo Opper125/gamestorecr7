@@ -23,6 +23,15 @@
         this.renderProducts(productsRes.data || []);
         this.renderMenuStrip(menusRes.data || []);
         this.renderBanners(bannersRes.data || []);
+
+        // Initialize banner slider if banners exist
+        if (bannersRes.data && bannersRes.data.length > 0) {
+          setTimeout(() => {
+            if (window.BannerSlider) {
+              BannerSlider.init('home-banner-slider');
+            }
+          }, 100);
+        }
       } catch (err) {
         console.warn('Home load error');
       }
