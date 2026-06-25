@@ -176,4 +176,5 @@ CONFIG.fetch = async function (url, options = {}) {
   return response.json();
 };
 
-export default CONFIG;
+// Attach to window for non-module script access
+window.CONFIG = CONFIG;
