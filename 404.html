@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Page Not Found</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #FAF9F7;
+      color: #1A1A1A;
+      font-family: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container {
+      text-align: center;
+      max-width: 480px;
+    }
+    .code {
+      font-size: 7rem;
+      font-weight: 300;
+      color: #9E9E9E;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.04em;
+    }
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #6B6B6B;
+      margin-bottom: 0.75rem;
+    }
+    p {
+      font-size: 0.9rem;
+      color: #9E9E9E;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1.5rem;
+      background: #1A1A1A;
+      color: #FAF9F7;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    a:hover { opacity: 0.85; }
+    svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="code">404</div>
+    <h1>This page is not available</h1>
+    <p>The page you are looking for does not exist or you do not have permission to access it.</p>
+    <a href="/" aria-label="Return to homepage">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Back to Home
+    </a>
+  </div>
+</body>
+</html>
