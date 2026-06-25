@@ -1,0 +1,139 @@
+/* ============================================================
+   pages/users/orders.css - Orders Page Styles
+   ============================================================ */
+
+#page-orders {
+  padding: 0;
+}
+
+.orders-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  z-index: 5;
+  padding: 0.75rem 1rem 0;
+}
+
+.orders-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem;
+  margin-bottom: 0;
+}
+
+.orders-tab {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: 4px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.orders-tab.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+}
+
+.orders-content {
+  padding: 0.75rem 1rem;
+}
+
+/* ── Orders List ── */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.order-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.order-card-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.order-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.order-card-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.order-card-quantity {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.1rem;
+}
+
+.order-card-total {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--price-color);
+  margin-top: 0.2rem;
+}
+
+.order-card-status {
+  flex-shrink: 0;
+}
+
+.order-card-date {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ── Slip Button ── */
+.order-slip-btn {
+  padding: 0.3rem 0.7rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  transition: background var(--transition-fast);
+  margin-top: 0.35rem;
+}
+
+.order-slip-btn:hover {
+  background: var(--stroke-light);
+}
+
+/* ── Rejection Message ── */
+.order-rejection-msg {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(239, 68, 68, 0.06);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  line-height: 1.4;
+}
+
+/* ── Empty State ── */
+.orders-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

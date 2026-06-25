@@ -1,0 +1,104 @@
+/* ============================================================
+   pages/users/categories.css - Categories Page Styles
+   ============================================================ */
+
+#page-categories {
+  padding: 0 1rem 1rem;
+}
+
+.page-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* ── Become a Reseller CTA ── */
+.reseller-cta {
+  background: linear-gradient(135deg, #1A1A1A, #2D2D2D);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.reseller-cta:hover {
+  opacity: 0.9;
+}
+
+.reseller-cta-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.reseller-cta-arrow {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-amber);
+}
+
+/* ── KYC Form ── */
+.kyc-form {
+  padding: 1rem 0;
+}
+
+.kyc-form .form-group {
+  margin-bottom: 0.85rem;
+}
+
+.kyc-form label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.kyc-form .form-input {
+  margin-top: 0.2rem;
+}
+
+.kyc-status {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.kyc-status-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 0.75rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.kyc-status-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ── Reseller Public Storefront ── */
+.reseller-storefront {
+  padding: 1rem 0;
+}
+
+.reseller-storefront-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.reseller-storefront-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.reseller-storefront-stats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

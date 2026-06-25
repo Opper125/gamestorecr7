@@ -1,0 +1,43 @@
+/* ============================================================
+   pages/users/home.css - Home Page Styles
+   ============================================================ */
+
+#page-home {
+  padding: 0;
+}
+
+/* ── Home Categories Grid ── */
+.home-categories {
+  padding: 0.75rem 1rem;
+}
+
+.home-categories-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+/* ── Standalone Products ── */
+.home-standalone-products {
+  padding: 0 1rem 1rem;
+}
+
+.standalone-products-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.standalone-products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

@@ -1,0 +1,245 @@
+/* ============================================================
+   pages/users/profile.css - Profile Page Styles
+   ============================================================ */
+
+#page-profile {
+  padding: 0 1rem 1rem;
+}
+
+.profile-content {
+  padding: 0.5rem 0;
+}
+
+/* ── Profile Header ── */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+  margin-bottom: 1rem;
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--bg-secondary);
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-username {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-gmail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.profile-balance {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--price-color);
+  margin: 0.5rem 0;
+}
+
+/* ── Reseller Badge ── */
+.reseller-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  border-radius: 99px;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.reseller-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ── Profile Detail Rows ── */
+.profile-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.profile-detail-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.profile-detail-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Password Toggle ── */
+.password-toggle {
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.password-toggle:hover {
+  color: var(--text-secondary);
+}
+
+/* ── Profile Actions ── */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.profile-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.profile-action-btn:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-action-btn svg {
+  color: var(--text-muted);
+}
+
+/* ── Review Section ── */
+.review-section {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--stroke-light);
+}
+
+.review-section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.star-rating {
+  display: flex;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.star-rating svg {
+  width: 28px;
+  height: 28px;
+  color: var(--stroke-light);
+  transition: color var(--transition-fast);
+}
+
+.star-rating svg.filled {
+  color: var(--accent-amber);
+}
+
+.star-rating:hover svg {
+  color: var(--accent-amber);
+}
+
+.star-rating svg:hover ~ svg {
+  color: var(--stroke-light);
+}
+
+.review-input {
+  margin-top: 0.75rem;
+}
+
+.review-input textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.review-input textarea:focus {
+  border-color: var(--accent-blue);
+}
+
+.review-submit-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1.25rem;
+}
+
+/* ── Review List ── */
+.review-list {
+  margin-top: 1rem;
+}
+
+.review-see-more {
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  cursor: pointer;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+/* ── Balance History ── */
+.balance-history {
+  margin-top: 1rem;
+}
+
+.balance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+  font-size: 0.8rem;
+}
+
+.balance-item.credit .balance-amount {
+  color: var(--accent-green);
+}
+
+.balance-item.debit .balance-amount {
+  color: var(--accent-red);
+}
+
+.balance-amount {
+  font-weight: 700;
+}
+
+.balance-date {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}

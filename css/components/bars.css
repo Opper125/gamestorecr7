@@ -1,0 +1,265 @@
+/* ============================================================
+   bars.css - Bar Stroke & Marquee Components
+   Stroke: top half black, bottom half red gradient.
+   Live Text Bar, Live Order Bar, Menu Strip, Search bars.
+   ============================================================ */
+
+/* ── Bar Stroke Utility (applied to any bar container) ── */
+.bar-stroke {
+  position: relative;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid var(--accent-red);
+}
+
+.bar-stroke::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to bottom, transparent 50%, var(--accent-red) 50%);
+}
+
+/* ── Live Text Bar ── */
+.live-text-bar {
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-card);
+  padding: 0.5rem 0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid var(--accent-red);
+  position: relative;
+}
+
+.live-text-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marqueeScroll 20s linear infinite;
+}
+
+.live-text-content {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  padding-right: 2rem;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Live Order Bar ── */
+.live-order-bar {
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-card);
+  padding: 0.4rem 0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid var(--accent-red);
+  position: relative;
+}
+
+.live-order-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+.live-order-item {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding-right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.live-order-username {
+  font-weight: 600;
+  color: var(--accent-blue);
+}
+
+.live-order-success {
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+.live-order-product {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Menu Strip (Horizontal Scroll) ── */
+.menu-strip {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid var(--accent-red);
+  background: var(--bg-card);
+}
+
+.menu-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-strip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+}
+
+.menu-strip-item:hover {
+  opacity: 0.8;
+}
+
+.menu-strip-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.menu-strip-label {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Search Bar Stroke ── */
+.search-bar-stroke {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid var(--accent-red);
+}
+
+.search-page .search-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--stroke-light);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--accent-blue);
+}
+
+.search-clear {
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.search-clear:hover {
+  color: var(--text-secondary);
+}
+
+.search-results {
+  padding: 1rem;
+}
+
+.search-group {
+  margin-bottom: 1.25rem;
+}
+
+.search-group-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.search-result-item:hover {
+  background: var(--bg-secondary);
+  margin: 0 -1rem;
+  padding: 0.6rem 1rem;
+}
+
+.search-result-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.search-result-info {
+  flex: 1;
+}
+
+.search-result-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.search-result-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* ── Category Dropdown Toggle (3-burger icon) ── */
+.category-toggle-btn {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+  z-index: 5;
+}
+
+.category-toggle-btn span {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 1px;
+}

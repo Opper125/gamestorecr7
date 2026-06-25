@@ -1,0 +1,248 @@
+/* ============================================================
+   pages/users/gstore.css - G Store Page Styles
+   App-style grid layout, two tabs, category lists
+   ============================================================ */
+
+.gstore-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg-primary);
+  z-index: 5;
+  padding: 0.75rem 1rem 0;
+}
+
+.gstore-tabs {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem;
+}
+
+.gstore-tab {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: 4px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.gstore-tab.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+}
+
+.gstore-content {
+  padding: 0.75rem 1rem;
+}
+
+/* ── Category Section ── */
+.gstore-category-section {
+  margin-bottom: 1.25rem;
+}
+
+.gstore-category-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.gstore-category-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.gstore-category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  padding: 0.5rem;
+}
+
+.gstore-category-item:hover {
+  opacity: 0.8;
+}
+
+.gstore-category-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.gstore-category-name {
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.1;
+}
+
+/* ── Game List ── */
+.gstore-game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gstore-game-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+  cursor: pointer;
+}
+
+.gstore-game-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.gstore-game-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Game Detail Flow ── */
+.gstore-game-detail {
+  padding: 1rem 0;
+}
+
+.gstore-input-section {
+  margin-bottom: 1rem;
+}
+
+.gstore-input-section label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.gstore-verify-result {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(34, 197, 94, 0.06);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+/* ── Package List ── */
+.gstore-package-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.gstore-package-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+.gstore-package-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.gstore-package-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.gstore-package-eta {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ── Buying Pro ── */
+.buying-pro-section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.buying-pro-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.buying-pro-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.buying-pro-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.buying-pro-rank {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.buying-pro-username {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.buying-pro-spent {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-amber);
+}
+
+/* ── Deposit Form ── */
+.deposit-form {
+  padding: 1rem 0;
+}
+
+.deposit-form .deposit-amount-display {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--price-color);
+  text-align: center;
+  padding: 1rem;
+}
+
+.deposit-status {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--accent-amber);
+}

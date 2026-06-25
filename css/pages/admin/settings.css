@@ -1,0 +1,98 @@
+/* ============================================================
+   pages/admin/settings.css - Admin Settings Page Styles
+   ============================================================ */
+
+.settings-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.settings-section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--stroke-light);
+}
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+.settings-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.settings-value {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* ── Logo Preview ── */
+.settings-logo-preview {
+  max-width: 160px;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+}
+
+/* ── Media Preview ── */
+.settings-media-preview {
+  max-width: 200px;
+  max-height: 150px;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Site On/Off Toggle ── */
+.site-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+}
+
+.site-toggle-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.site-toggle-status {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+}
+
+.site-toggle-status.on {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.site-toggle-status.off {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+/* ── Settings Save Button ── */
+.settings-save-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
