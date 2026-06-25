@@ -1,0 +1,99 @@
+/* ============================================================
+   pages/reseller/orders.css - Reseller Orders Page Styles
+   ============================================================ */
+
+#reseller-page-orders {
+  padding: 0;
+}
+
+#reseller-page-orders .page-title {
+  padding: 0 0 0.75rem;
+}
+
+/* ── Reseller Orders List ── */
+#reseller-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.reseller-order-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 0.85rem;
+}
+
+.reseller-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.35rem;
+}
+
+.reseller-order-buyer {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reseller-order-product {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
+}
+
+.reseller-order-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.75rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.reseller-order-total {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+.reseller-order-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--stroke-light);
+}
+
+.reseller-order-btn {
+  flex: 1;
+  padding: 0.4rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  transition: opacity var(--transition-fast);
+}
+
+.reseller-order-btn.approve {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-green);
+}
+
+.reseller-order-btn.reject {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--accent-red);
+}
+
+.reseller-order-btn:hover {
+  opacity: 0.8;
+}
+
+/* ── Empty State ── */
+.reseller-orders-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

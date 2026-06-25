@@ -1,0 +1,139 @@
+/* ============================================================
+   pages/reseller/products.css - Reseller Products Page Styles
+   ============================================================ */
+
+#reseller-page-products {
+  padding: 0;
+}
+
+#reseller-page-products .page-title {
+  padding: 0 0 0.75rem;
+}
+
+/* ── Product Type Tabs ── */
+.product-type-tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem;
+}
+
+.product-type-tab {
+  flex: 1;
+  padding: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  border-radius: 4px;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.product-type-tab.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+}
+
+/* ── Product List ── */
+.reseller-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.reseller-product-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-card);
+}
+
+.reseller-product-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.reseller-product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.reseller-product-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reseller-product-meta {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.reseller-product-price {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+/* ── Creation Limit Bar ── */
+.limit-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.limit-progress {
+  flex: 1;
+  height: 4px;
+  background: var(--stroke-light);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.limit-progress-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 99px;
+  transition: width var(--transition-base);
+}
+
+.limit-progress-fill.full {
+  background: var(--accent-red);
+}
+
+.limit-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ── Create Button (disabled if limit reached) ── */
+.create-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.create-btn.limit-reached {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* ── Product Form ── */
+.reseller-product-form {
+  padding: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 1rem;
+}
