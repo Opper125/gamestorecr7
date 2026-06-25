@@ -24,13 +24,10 @@
         this.renderMenuStrip(menusRes.data || []);
         this.renderBanners(bannersRes.data || []);
 
-        // Initialize banner slider if banners exist
-        if (bannersRes.data && bannersRes.data.length > 0) {
-          setTimeout(() => {
-            if (window.BannerSlider) {
-              BannerSlider.init('home-banner-slider');
-            }
-          }, 100);
+        // Initialize banner slider synchronously after rendering
+        // DOM is already updated by renderBanners() above
+        if (bannersRes.data && bannersRes.data.length > 0 && window.BannerSlider) {
+          BannerSlider.init('home-banner-slider');
         }
       } catch (err) {
         console.warn('Home load error');
