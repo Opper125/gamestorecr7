@@ -230,6 +230,54 @@ const Utils = {
       return defaultVal;
     }
   },
+
+  /**
+   * Dashboard Navigation System
+   * Switches between pages and calls the correct load function
+   *
+   * Usage:
+   *   Admin: Utils.initDashboardNav('sidebar-item', 'admin-page', { dashboard: AdminDashboard, settings: AdminSettings, ... })
+   *   User:  Utils.initDashboardNav('nav-item', 'page', { home: HomePage, categories: CategoriesPage, ... })
+   *   Reseller: Utils.initDashboardNav('sidebar-item', 'reseller-page', { dashboard: ResellerDashboard, ... })
+   */
+  initDashboardNav(sidebarClass, pageIdPrefix, pageHandlers) {
+    const sidebarItems = document.querySelectorAll('.' + sidebarClass);
+    if (!sidebarItems.length) return;
+
+    sidebarItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const page = item.dataset.page;
+        if (!page) return;
+
+        // Update active states on sidebar
+        sidebarItems.forEach(s => s.classList.remove('active'));
+        item.classList.add('active');
+
+        // Hide all pages, show target
+        document.querySelectorAll('.' + pageIdPrefix).forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageIdPrefix + '-' + page);
+        if (target) target.classList.add('active');
+
+        // Call the page's load function
+        const handler = pageHandlers[page];
+        if (handler && typeof handler.load === 'function') {
+          handler.load();
+        }
+      });
+    });
+
+    // Load the initial active page
+    const activeItem = document.querySelector('.' + sidebarClass + '.active');
+    if (activeItem) {
+      const page = activeItem.dataset.page;
+      if (page) {
+        const handler = pageHandlers[page];
+        if (handler && typeof handler.load === 'function') {
+          setTimeout(() => handler.load(), 100);
+        }
+      }
+    }
+  },
 };
 
 // Export to window for access from non-module scripts
