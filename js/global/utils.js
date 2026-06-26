@@ -235,12 +235,18 @@ const Utils = {
    * Dashboard Navigation System
    * Switches between pages and calls the correct load function
    *
+   * @param {string} sidebarClass - CSS class of sidebar items (e.g. 'sidebar-item', 'nav-item')
+   * @param {string} pageIdPrefix - ID prefix for page sections (e.g. 'admin-page', 'page', 'reseller-page')
+   * @param {Object} pageHandlers - Map of page names to handler objects with .load()
+   * @param {string} [pageClass] - Optional CSS class for page sections (defaults to pageIdPrefix)
+   *
    * Usage:
-   *   Admin: Utils.initDashboardNav('sidebar-item', 'admin-page', { dashboard: AdminDashboard, settings: AdminSettings, ... })
-   *   User:  Utils.initDashboardNav('nav-item', 'page', { home: HomePage, categories: CategoriesPage, ... })
-   *   Reseller: Utils.initDashboardNav('sidebar-item', 'reseller-page', { dashboard: ResellerDashboard, ... })
+   *   Admin: Utils.initDashboardNav('sidebar-item', 'admin-page', { dashboard: AdminDashboard, ... })
+   *   User:  Utils.initDashboardNav('nav-item', 'page', { home: HomePage, ... })
+   *   Reseller: Utils.initDashboardNav('sidebar-item', 'reseller-page', { dashboard: ResellerDashboard, ... }, 'admin-page')
    */
-  initDashboardNav(sidebarClass, pageIdPrefix, pageHandlers) {
+  initDashboardNav(sidebarClass, pageIdPrefix, pageHandlers, pageClass) {
+    const pageClassName = pageClass || pageIdPrefix;
     const sidebarItems = document.querySelectorAll('.' + sidebarClass);
     if (!sidebarItems.length) return;
 
@@ -253,8 +259,8 @@ const Utils = {
         sidebarItems.forEach(s => s.classList.remove('active'));
         item.classList.add('active');
 
-        // Hide all pages, show target
-        document.querySelectorAll('.' + pageIdPrefix).forEach(p => p.classList.remove('active'));
+        // Hide all pages (using CSS class), show target (using ID)
+        document.querySelectorAll('.' + pageClassName).forEach(p => p.classList.remove('active'));
         const target = document.getElementById(pageIdPrefix + '-' + page);
         if (target) target.classList.add('active');
 

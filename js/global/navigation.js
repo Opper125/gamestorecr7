@@ -46,7 +46,7 @@
       'input-tables': window.ResellerInputTables,
       premium: window.ResellerPremium,
       settings: window.ResellerSettings,
-    });
+    }, 'admin-page');
   }
 
   function initUserNav() {

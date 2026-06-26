@@ -69,6 +69,10 @@
             // Show admin dashboard
             document.getElementById('admin-login-screen').style.display = 'none';
             document.getElementById('admin-app').style.display = 'flex';
+            // Load initial dashboard page
+            if (window.AdminDashboard && typeof window.AdminDashboard.load === 'function') {
+              setTimeout(() => window.AdminDashboard.load(), 100);
+            }
           } else {
             const errorEl = document.getElementById('admin-login-error');
             if (errorEl) {
