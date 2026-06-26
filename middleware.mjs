@@ -59,18 +59,28 @@ export default function middleware(request) {
     }
 
     case 'admin': {
+      // Redirect root and /admin to /admin.html
+      if (path === '/' || path === '/admin') {
+        const redirectUrl = new URL('/admin.html', request.url);
+        return Response.redirect(redirectUrl, 302);
+      }
       // Block user/reseller paths on admin domain
-      if (path === '/index.html' || path === '/' || path.startsWith('/reseller')) {
+      if (path === '/index.html' || path.startsWith('/reseller')) {
         return new Response(HTML_404, {
           status: 404,
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
         });
       }
-      // Allow /admin, /admin.html, css/js/api assets
+      // Allow everything else (admin.html, css/js/api/assets)
       return;
     }
 
     case 'reseller': {
+      // Redirect root to /reseller.html
+      if (path === '/') {
+        const redirectUrl = new URL('/reseller.html', request.url);
+        return Response.redirect(redirectUrl, 302);
+      }
       // Block admin/user paths on reseller domain
       if (path.startsWith('/admin') || path === '/index.html') {
         return new Response(HTML_404, {
@@ -78,7 +88,7 @@ export default function middleware(request) {
           headers: { 'Content-Type': 'text/html; charset=utf-8' },
         });
       }
-      // Allow /reseller, /reseller.html, css/js/api assets
+      // Allow /reseller, /reseller.html, css/js/api/assets
       return;
     }
   }

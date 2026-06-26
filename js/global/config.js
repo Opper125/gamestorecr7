@@ -51,58 +51,70 @@ const CONFIG = {
 };
 
 /**
- * Initialize config - fetch Supabase connection info and admin settings
+ * Initialize config - fetch Supabase connection info from /api/config and admin settings from Supabase
  */
 CONFIG.init = async function () {
   try {
-    // Fetch Supabase anon key (public) from a lightweight endpoint
-    // This is the only public key - the service role key is never exposed
-    const settingsRes = await fetch('/api/supabase', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        action: 'query',
-        table: 'admin_settings',
-        columns: 'key, value',
-      }),
-    });
+    // Step 1: Fetch public config from server-side ENV (/api/config)
+    const configRes = await fetch('/api/config');
+    if (configRes.ok) {
+      const configData = await configRes.json();
+      CONFIG.supabaseUrl = configData.supabaseUrl || null;
+      CONFIG.supabaseAnonKey = configData.supabaseAnonKey || null;
+      CONFIG.userDomain = configData.userDomain || null;
+      CONFIG.adminDomain = configData.adminDomain || null;
+      CONFIG.resellerDomain = configData.resellerDomain || null;
+    }
 
-    if (settingsRes.ok) {
-      const settingsData = await settingsRes.json();
-      if (settingsData.data) {
-        settingsData.data.forEach(setting => {
-          switch (setting.key) {
-            case 'logo_url':
-              CONFIG.logoUrl = setting.value;
-              break;
-            case 'background_media_url':
-              CONFIG.backgroundMedia = setting.value;
-              break;
-            case 'loading_ui_url':
-              CONFIG.loadingUiUrl = setting.value;
-              break;
-            case 'live_text':
-              CONFIG.liveText = setting.value;
-              break;
-            case 'site_on':
-              CONFIG.siteOn = setting.value === 'true';
-              break;
-            case 'site_off_message':
-              CONFIG.siteOffMessage = setting.value || '';
-              break;
-            case 'site_off_contact_name':
-              if (!CONFIG.siteOffContact) CONFIG.siteOffContact = {};
-              CONFIG.siteOffContact.name = setting.value;
-              break;
-            case 'site_off_contact_value':
-              if (!CONFIG.siteOffContact) CONFIG.siteOffContact = {};
-              CONFIG.siteOffContact.value = setting.value;
-              break;
-            case 'site_off_media_url':
-              CONFIG.siteOffMedia = setting.value || '';
-              break;
-          }
-        });
+    // Step 2: Fetch admin settings from Supabase
+    if (CONFIG.supabaseUrl && CONFIG.supabaseAnonKey) {
+      const settingsRes = await fetch('/api/supabase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'query',
+          table: 'admin_settings',
+          columns: 'key, value',
+        }),
+      });
+
+      if (settingsRes.ok) {
+        const settingsData = await settingsRes.json();
+        if (settingsData.data) {
+          settingsData.data.forEach(setting => {
+            switch (setting.key) {
+              case 'logo_url':
+                CONFIG.logoUrl = setting.value;
+                break;
+              case 'background_media_url':
+                CONFIG.backgroundMedia = setting.value;
+                break;
+              case 'loading_ui_url':
+                CONFIG.loadingUiUrl = setting.value;
+                break;
+              case 'live_text':
+                CONFIG.liveText = setting.value;
+                break;
+              case 'site_on':
+                CONFIG.siteOn = setting.value === 'true';
+                break;
+              case 'site_off_message':
+                CONFIG.siteOffMessage = setting.value || '';
+                break;
+              case 'site_off_contact_name':
+                if (!CONFIG.siteOffContact) CONFIG.siteOffContact = {};
+                CONFIG.siteOffContact.name = setting.value;
+                break;
+              case 'site_off_contact_value':
+                if (!CONFIG.siteOffContact) CONFIG.siteOffContact = {};
+                CONFIG.siteOffContact.value = setting.value;
+                break;
+              case 'site_off_media_url':
+                CONFIG.siteOffMedia = setting.value || '';
+                break;
+            }
+          });
+        }
       }
     }
 

@@ -26,33 +26,21 @@ const Realtime = {
       // Dynamically import Supabase JS
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
 
-      // Fetch public Supabase config from a lightweight endpoint
-      const configRes = await fetch('/api/supabase', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          action: 'query',
-          table: 'admin_settings',
-          columns: 'key, value',
-          filters: [
-            { method: 'in', column: 'key', value: ['supabase_url', 'supabase_anon_key'] },
-          ],
-        }),
-      });
+      // Get Supabase credentials from /api/config (server-side ENV)
+      let supabaseUrl = CONFIG?.supabaseUrl || '';
+      let supabaseAnonKey = CONFIG?.supabaseAnonKey || '';
 
-      const configData = await configRes.json();
-
-      let supabaseUrl = '';
-      let supabaseAnonKey = '';
-
-      if (configData.data) {
-        configData.data.forEach(s => {
-          if (s.key === 'supabase_url') supabaseUrl = s.value;
-          if (s.key === 'supabase_anon_key') supabaseAnonKey = s.value;
-        });
+      // Fallback: try /api/config directly if CONFIG not populated yet
+      if (!supabaseUrl || !supabaseAnonKey) {
+        try {
+          const configRes = await fetch('/api/config');
+          const configData = await configRes.json();
+          supabaseUrl = configData.supabaseUrl || '';
+          supabaseAnonKey = configData.supabaseAnonKey || '';
+        } catch (e) { /* ignore */ }
       }
 
-      // Fallback: try to read from window.__ENV if available
+      // Fallback: try window.__ENV
       if (!supabaseUrl && window.__ENV?.SUPABASE_URL) supabaseUrl = window.__ENV.SUPABASE_URL;
       if (!supabaseAnonKey && window.__ENV?.SUPABASE_ANON_KEY) supabaseAnonKey = window.__ENV.SUPABASE_ANON_KEY;
 
