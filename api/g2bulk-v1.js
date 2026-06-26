@@ -6,67 +6,35 @@
  *
  * POST /api/g2bulk-v1
  * Body: { endpoint, method, data }
- *
- * Endpoints:
- *   games                  -> GET /v1/games
- *   games/fields           -> POST /v1/games/fields { game_code }
- *   games/servers          -> GET /v1/games/:code/servers
- *   games/check-player     -> POST /v1/games/checkPlayerId { game_code, player_id }
- *   games/catalogue        -> GET /v1/games/:code/catalogue
- *   games/eta              -> POST /v1/games/eta { game_code, package_id }
- *   games/order            -> POST /v1/games/:code/order
- *   orders/delivery        -> GET /v1/orders/:id/delivery
- *   orders/status          -> GET /v1/orders/:id
- *   balance                -> GET /v1/balance
  */
-
-const fetch = require('node-fetch');
 
 const G2BULK_API_KEY = process.env.G2BULK_API_KEY;
 const G2BULK_BASE_URL = process.env.G2BULK_BASE_URL || 'https://api.g2bulk.com/v1';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  if (!G2BULK_API_KEY) {
-    return res.status(500).json({ error: 'G2Bulk API key not configured' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!G2BULK_API_KEY) return res.status(500).json({ error: 'G2Bulk API key not configured' });
 
   try {
     const { endpoint, method = 'GET', data = {} } = req.body;
+    if (!endpoint) return res.status(400).json({ error: 'Missing endpoint parameter' });
 
-    if (!endpoint) {
-      return res.status(400).json({ error: 'Missing endpoint parameter' });
-    }
-
-    const headers = {
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${G2BULK_API_KEY}`,
-    };
-
+    const headers = { 'Accept': 'application/json', 'Authorization': `Bearer ${G2BULK_API_KEY}` };
     let url;
-    let fetchOptions = { headers };
+    const fetchOptions = { headers };
 
     switch (endpoint) {
       case 'games': {
         url = `${G2BULK_BASE_URL}/games`;
         fetchOptions.method = 'GET';
-        if (data.game_code) {
-          url += `/${encodeURIComponent(data.game_code)}`;
-        }
+        if (data.game_code) url += `/${encodeURIComponent(data.game_code)}`;
         break;
       }
-
       case 'games/fields': {
         url = `${G2BULK_BASE_URL}/games/fields`;
         fetchOptions.method = 'POST';
@@ -74,79 +42,57 @@ module.exports = async (req, res) => {
         fetchOptions.body = JSON.stringify({ game_code: data.game_code });
         break;
       }
-
       case 'games/servers': {
         if (!data.game_code) return res.status(400).json({ error: 'Missing game_code' });
         url = `${G2BULK_BASE_URL}/games/${encodeURIComponent(data.game_code)}/servers`;
         fetchOptions.method = 'GET';
         break;
       }
-
       case 'games/check-player': {
         url = `${G2BULK_BASE_URL}/games/checkPlayerId`;
         fetchOptions.method = 'POST';
         headers['Content-Type'] = 'application/json';
-        fetchOptions.body = JSON.stringify({
-          game_code: data.game_code,
-          player_id: data.player_id,
-          server_id: data.server_id || null,
-        });
+        fetchOptions.body = JSON.stringify({ game_code: data.game_code, player_id: data.player_id, server_id: data.server_id || null });
         break;
       }
-
       case 'games/catalogue': {
         if (!data.game_code) return res.status(400).json({ error: 'Missing game_code' });
         url = `${G2BULK_BASE_URL}/games/${encodeURIComponent(data.game_code)}/catalogue`;
         fetchOptions.method = 'GET';
         break;
       }
-
       case 'games/eta': {
         url = `${G2BULK_BASE_URL}/games/eta`;
         fetchOptions.method = 'POST';
         headers['Content-Type'] = 'application/json';
-        fetchOptions.body = JSON.stringify({
-          game_code: data.game_code,
-          package_id: data.package_id,
-        });
+        fetchOptions.body = JSON.stringify({ game_code: data.game_code, package_id: data.package_id });
         break;
       }
-
       case 'games/order': {
         if (!data.game_code) return res.status(400).json({ error: 'Missing game_code' });
         url = `${G2BULK_BASE_URL}/games/${encodeURIComponent(data.game_code)}/order`;
         fetchOptions.method = 'POST';
         headers['Content-Type'] = 'application/json';
-        fetchOptions.body = JSON.stringify({
-          package_id: data.package_id,
-          player_id: data.player_id,
-          server_id: data.server_id || null,
-          quantity: data.quantity || 1,
-          idempotency_key: data.idempotency_key,
-        });
+        fetchOptions.body = JSON.stringify({ package_id: data.package_id, player_id: data.player_id, server_id: data.server_id || null, quantity: data.quantity || 1, idempotency_key: data.idempotency_key });
         break;
       }
-
       case 'orders/delivery': {
         if (!data.order_id) return res.status(400).json({ error: 'Missing order_id' });
         url = `${G2BULK_BASE_URL}/orders/${encodeURIComponent(data.order_id)}/delivery`;
         fetchOptions.method = 'GET';
         break;
       }
-
       case 'orders/status': {
         if (!data.order_id) return res.status(400).json({ error: 'Missing order_id' });
         url = `${G2BULK_BASE_URL}/orders/${encodeURIComponent(data.order_id)}`;
         fetchOptions.method = 'GET';
         break;
       }
-
       case 'balance': {
         url = `${G2BULK_BASE_URL}/balance`;
         fetchOptions.method = 'GET';
         break;
       }
-
       default:
         return res.status(400).json({ error: `Unknown endpoint: ${endpoint}` });
     }
@@ -156,10 +102,7 @@ module.exports = async (req, res) => {
 
     if (!response.ok) {
       console.error('G2Bulk V1 error:', result);
-      return res.status(response.status).json({
-        error: result.message || result.error || 'G2Bulk API error',
-        details: result,
-      });
+      return res.status(response.status).json({ error: result.message || result.error || 'G2Bulk API error', details: result });
     }
 
     return res.status(200).json({ data: result });
@@ -167,4 +110,4 @@ module.exports = async (req, res) => {
     console.error('G2Bulk V1 proxy error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-};
+}

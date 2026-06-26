@@ -12,47 +12,28 @@
  * Response: { url: "https://i.ibb.co/..." }
  */
 
-const fetch = require('node-fetch');
-
 const IMGBB_API_KEY = process.env.IMGBB_API_KEY;
 const IMGBB_UPLOAD_URL = 'https://api.imgbb.com/1/upload';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  if (!IMGBB_API_KEY) {
-    return res.status(500).json({ error: 'ImgBB API key not configured' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!IMGBB_API_KEY) return res.status(500).json({ error: 'ImgBB API key not configured' });
 
   try {
     const { image, name } = req.body;
-
-    if (!image) {
-      return res.status(400).json({ error: 'Missing image data' });
-    }
+    if (!image) return res.status(400).json({ error: 'Missing image data' });
 
     const formData = new URLSearchParams();
     formData.append('key', IMGBB_API_KEY);
     formData.append('image', image);
-    if (name) {
-      formData.append('name', name);
-    }
+    if (name) formData.append('name', name);
 
-    const response = await fetch(IMGBB_UPLOAD_URL, {
-      method: 'POST',
-      body: formData,
-    });
-
+    const response = await fetch(IMGBB_UPLOAD_URL, { method: 'POST', body: formData });
     const result = await response.json();
 
     if (!result.success) {
@@ -71,4 +52,4 @@ module.exports = async (req, res) => {
     console.error('ImgBB proxy error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-};
+}

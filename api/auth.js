@@ -9,8 +9,8 @@
  * with bcrypt.compare on login. Never stored in plaintext.
  */
 
-const { createClient } = require('@supabase/supabase-js');
-const bcrypt = require('bcryptjs');
+import { createClient } from '@supabase/supabase-js';
+import bcrypt from 'bcryptjs';
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -20,17 +20,14 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
   auth: { persistSession: false },
 });
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  if (!supabaseUrl || !supabaseServiceKey) {
-    return res.status(500).json({ error: 'Supabase not configured' });
-  }
+  if (!supabaseUrl || !supabaseServiceKey) return res.status(500).json({ error: 'Supabase not configured' });
 
   try {
     const { action, username, gmail, password, pin } = req.body;
@@ -42,36 +39,20 @@ module.exports = async (req, res) => {
           return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        // Check duplicate username
         const { data: existingUser } = await supabase
-          .from('users')
-          .select('id')
-          .eq('username', username)
-          .maybeSingle();
+          .from('users').select('id').eq('username', username).maybeSingle();
         if (existingUser) return res.status(409).json({ error: 'Username already exists' });
 
-        // Check duplicate email
         const { data: existingEmail } = await supabase
-          .from('users')
-          .select('id')
-          .eq('gmail', gmail)
-          .maybeSingle();
+          .from('users').select('id').eq('gmail', gmail).maybeSingle();
         if (existingEmail) return res.status(409).json({ error: 'Gmail already registered' });
 
-        // Hash password and PIN with bcrypt
         const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
         const pinHash = await bcrypt.hash(pin, SALT_ROUNDS);
 
-        // Insert user with hashed credentials
         const { data: newUser, error } = await supabase
           .from('users')
-          .insert({
-            username,
-            gmail,
-            password_hash: passwordHash,
-            pin_hash: pinHash,
-            game_balance: 0,
-          })
+          .insert({ username, gmail, password_hash: passwordHash, pin_hash: pinHash, game_balance: 0 })
           .select('id, username, gmail, game_balance, profile_icon_url, role')
           .single();
 
@@ -85,11 +66,8 @@ module.exports = async (req, res) => {
       }
 
       case 'login': {
-        if (!username || !password) {
-          return res.status(400).json({ error: 'Missing username or password' });
-        }
+        if (!username || !password) return res.status(400).json({ error: 'Missing username or password' });
 
-        // Fetch user
         const { data: user, error } = await supabase
           .from('users')
           .select('id, username, gmail, game_balance, profile_icon_url, role, is_banned, password_hash')
@@ -104,13 +82,11 @@ module.exports = async (req, res) => {
           return res.status(403).json({ success: false, error: 'Your account has been banned.' });
         }
 
-        // Verify password with bcrypt
         const isValid = await bcrypt.compare(password, user.password_hash);
         if (!isValid) {
           return res.status(401).json({ success: false, error: 'Invalid username or password' });
         }
 
-        // Remove hash from response
         const { password_hash, ...safeUser } = user;
 
         return res.status(200).json({
@@ -127,4 +103,4 @@ module.exports = async (req, res) => {
     console.error('Auth error:', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
-};
+}

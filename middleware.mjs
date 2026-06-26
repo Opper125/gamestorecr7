@@ -1,130 +1,86 @@
 /**
- * middleware.mjs - Domain-Based Routing & Admin IP Guard
+ * middleware.mjs - Vercel Edge Middleware for Domain-Based Routing
  *
- * Reads USER_DOMAIN, ADMIN_DOMAIN, RESELLER_DOMAIN, ADMIN_IPADDRESS
- * from Vercel Environment Variables.
+ * Routes traffic based on domain configuration from Vercel ENV.
+ * - USER_DOMAIN    → serves index.html (blocks /admin, /reseller)
+ * - ADMIN_DOMAIN   → serves admin.html (blocks /index, /reseller)
+ * - RESELLER_DOMAIN → serves reseller.html (blocks /admin, /index)
  *
- * - USER_DOMAIN    -> serves index.html only
- * - ADMIN_DOMAIN   -> serves admin.html only + IP guard
- * - RESELLER_DOMAIN -> serves reseller.html only
- *
- * Any domain mismatch returns 404 immediately.
- * Admin IP guard blocks non-matching IPs at the edge.
+ * When no domains are configured, all requests pass through normally.
+ * This middleware runs on Vercel's Edge Runtime (Web APIs only —
+ * no fs, no path, no Node.js built-ins).
  */
+
+const HTML_404 = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>404 — Not Found</title><style>body{background:#FAF9F7;color:#1A1A1A;font-family:Inter,DM Sans,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;margin:0}.c{text-align:center;max-width:480px}.code{font-size:7rem;font-weight:200;color:#9E9E9E;line-height:1;margin-bottom:.5rem;letter-spacing:-.04em}h1{font-size:1.25rem;font-weight:500;color:#6B6B6B;margin-bottom:.75rem}p{font-size:.9rem;color:#9E9E9E;margin-bottom:0;line-height:1.6}a{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.5rem;background:#1A1A1A;color:#FAF9F7;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:500}</style></head><body><div class="c"><div class="code">404</div><h1>This page is not available</h1><p>The page you are looking for does not exist or you do not have permission to access it.</p><a href="/">← Back to Home</a></div></body></html>';
 
 export default function middleware(request) {
   const url = new URL(request.url);
   const host = request.headers.get('host') || '';
-  const clientIp = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '';
-
-  const userDomain = process.env.USER_DOMAIN?.toLowerCase() || '';
-  const adminDomain = process.env.ADMIN_DOMAIN?.toLowerCase() || '';
-  const resellerDomain = process.env.RESELLER_DOMAIN?.toLowerCase() || '';
-  const adminIp = process.env.ADMIN_IPADDRESS || '';
-  const adminLoginPwd = process.env.ADMIN_LOGIN_PASSWORD || '';
-
-  const path = url.pathname.toLowerCase();
   const hostLower = host.split(':')[0].toLowerCase();
+  const path = url.pathname.toLowerCase();
 
-  // ──────────────────────────────────────────────
-  // USER DOMAIN
-  // ──────────────────────────────────────────────
-  if (hostLower === userDomain) {
-    if (path.startsWith('/admin') || path.startsWith('/reseller')) {
-      return new Response(null, {
-        status: 404,
-        statusText: 'Not Found',
-        headers: {
-          'Content-Type': 'text/html',
-          'Cache-Control': 'no-store',
-        },
-      });
-    }
-    return serveFile('index.html', request);
+  const userDomain = (process.env.USER_DOMAIN || '').toLowerCase();
+  const adminDomain = (process.env.ADMIN_DOMAIN || '').toLowerCase();
+  const resellerDomain = (process.env.RESELLER_DOMAIN || '').toLowerCase();
+
+  const anyConfigured = userDomain || adminDomain || resellerDomain;
+
+  // If no domains configured, let everything pass through
+  if (!anyConfigured) {
+    return; // Vercel serves static files normally
   }
 
-  // ──────────────────────────────────────────────
-  // RESELLER DOMAIN
-  // ──────────────────────────────────────────────
-  if (hostLower === resellerDomain) {
-    if (path.startsWith('/admin') || path.startsWith('/index')) {
-      return new Response(null, {
-        status: 404,
-        statusText: 'Not Found',
-        headers: {
-          'Content-Type': 'text/html',
-          'Cache-Control': 'no-store',
-        },
-      });
-    }
-    return serveFile('reseller.html', request);
+  // ── Resolve which dashboard this host maps to ──
+  let dashboard = null; // null = unknown domain
+  if (hostLower === userDomain) dashboard = 'user';
+  else if (hostLower === adminDomain) dashboard = 'admin';
+  else if (hostLower === resellerDomain) dashboard = 'reseller';
+
+  // Unknown host → 404
+  if (!dashboard) {
+    return new Response(HTML_404, {
+      status: 404,
+      headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    });
   }
 
-  // ──────────────────────────────────────────────
-  // ADMIN DOMAIN
-  // ──────────────────────────────────────────────
-  if (hostLower === adminDomain) {
-    if (path.startsWith('/index') || path.startsWith('/reseller')) {
-      return new Response(null, {
-        status: 404,
-        statusText: 'Not Found',
-        headers: {
-          'Content-Type': 'text/html',
-          'Cache-Control': 'no-store',
-        },
-      });
-    }
-
-    // Admin IP Guard
-    if (adminIp) {
-      const requestIp = clientIp.split(',')[0].trim();
-      if (requestIp !== adminIp) {
-        return new Response(null, {
+  // ── Path access rules per dashboard ──
+  switch (dashboard) {
+    case 'user': {
+      // Block admin/reseller paths on user domain
+      if (path.startsWith('/admin') || path.startsWith('/reseller')) {
+        return new Response(HTML_404, {
           status: 404,
-          statusText: 'Not Found',
-          headers: {
-            'Content-Type': 'text/html',
-            'Cache-Control': 'no-store',
-          },
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
         });
       }
+      // Allow everything else → Vercel serves index.html
+      return;
     }
 
-    return serveFile('admin.html', request);
-  }
+    case 'admin': {
+      // Block user/reseller paths on admin domain
+      if (path === '/index.html' || path === '/' || path.startsWith('/reseller')) {
+        return new Response(HTML_404, {
+          status: 404,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+      // Allow /admin, /admin.html, css/js/api assets
+      return;
+    }
 
-  // ──────────────────────────────────────────────
-  // NO MATCH -> 404
-  // ──────────────────────────────────────────────
-  return new Response(null, {
-    status: 404,
-    statusText: 'Not Found',
-    headers: {
-      'Content-Type': 'text/html',
-      'Cache-Control': 'no-store',
-    },
-  });
-}
-
-/**
- * Serve an HTML file from the root of the project.
- */
-async function serveFile(filename, request) {
-  const fs = await import('fs/promises');
-  const path = await import('path');
-
-  try {
-    const filePath = path.join(process.cwd(), filename);
-    const content = await fs.readFile(filePath, 'utf-8');
-    return new Response(content, {
-      status: 200,
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'no-store',
-      },
-    });
-  } catch {
-    return new Response(null, { status: 404 });
+    case 'reseller': {
+      // Block admin/user paths on reseller domain
+      if (path.startsWith('/admin') || path === '/index.html') {
+        return new Response(HTML_404, {
+          status: 404,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+      // Allow /reseller, /reseller.html, css/js/api assets
+      return;
+    }
   }
 }
 
